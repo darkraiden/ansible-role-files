@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Davide Di Mauro
+  description: Role to provision files configurations.
+  company:
+
+  license: BSD
+
+  min_ansible_version: 1.2
+
+  github_branch: master
+
+  galaxy_tags:
+    - files
+    - directories
+    - templates
+
+dependencies: []

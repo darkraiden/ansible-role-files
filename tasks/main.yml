@@ -1,0 +1,34 @@
+---
+
+- name: Create files / directories / links
+  file:
+    path: "{{ item.path }}"
+    force: "{{ item.force | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    attributes: "{{ item.attributes | default(omit) }}"
+    recurse: "{{ item.recurse | default(omit) }}"
+    src: "{{ item.src | default(omit) }}"
+    state: "{{ item.state | default('file') }}"
+  with_items: "{{ files | selectattr('template', 'undefined') | selectattr('dest', 'undefined') | list}}"
+
+- name: Create templates
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.path }}"
+    force: "{{ item.force | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+  with_items: "{{ files | selectattr('template', 'defined') | list }}"
+
+- name: Copy file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    force: "{{ item.force | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+  with_items: "{{ files | selectattr('dest', 'defined') | list }}"

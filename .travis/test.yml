@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: True
+  roles:
+    - role_under_test
+  vars:
+    files:
+      - path: /tmp/testFile
+        state: touch
+      - path: /tmp/testFile
+        mode: "0400"
+      - path: /tmp/testDir
+        state: directory
+      - src: local/templates/test.j2
+        path: /tmp/testTemplate
+        template: True
+      - src: local/files/hello.sh
+        dest: /tmp/testCopy.sh
+        mode: "0774"
+    test_var: "Testing the template"
